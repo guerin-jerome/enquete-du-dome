@@ -51,8 +51,9 @@ export function Etape11({
   return (
     <section id="step-1">
       <p className="title">
-        <strong>🔍 Étape 1</strong> - Trouve le code
+        <strong>🔍 Étape 1</strong> - Comprendre le drame
       </p>
+      <p>Trouve le code.</p>
       <div id="digicode">
         <input
           maxLength={1}

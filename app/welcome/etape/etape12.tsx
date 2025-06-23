@@ -26,7 +26,7 @@ export function Etape12({
           <input
             id="arme"
             type="text"
-            placeholder="Ex : Pistolet"
+            placeholder="Ex : Revolver"
             value={solution}
             disabled={status === "success"}
             onChange={(event) => setSolution(event.target.value)}

@@ -1,6 +1,7 @@
 import { useRef, useState, type KeyboardEvent } from "react";
 import { Etape11 } from "./etape/etape11";
 import { Etape12 } from "./etape/etape12";
+import Etape2 from "./etape/etape2";
 
 /*
 <img
@@ -25,6 +26,9 @@ export function Welcome() {
           )}
         </>
       )}
+
+      {/** Etape 2 */}
+      {etape === 2 && <Etape2 />}
     </main>
   );
 }

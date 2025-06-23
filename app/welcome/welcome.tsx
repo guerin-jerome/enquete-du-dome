@@ -1,22 +1,20 @@
 export function Welcome() {
   return (
     <main>
-      <div id="left-part">
-        <img
-          id="background"
-          src="https://i.ibb.co/ksX071gk/background.png"
-          alt="Bienvenue à toi enquêtrice"
-        />
-      </div>
-      <div id="right-part">
-        <h1>L'enquête du Dôme</h1>
-        <br />
+      <h1>L'enquête du Dôme</h1>
+      <br />
+      <div id="typewriter">
         <p className="typewriter-effect">
           Te sens-tu prête à relever le défi de résoudre ce mystérieux meurtre ?
         </p>
-        <br />
-        <button id="start-button">Commencer</button>
       </div>
+      <button id="start-button">Commencer</button>
+
+      <img
+        id="background"
+        src="https://i.ibb.co/ksX071gk/background.png"
+        alt="Bienvenue à toi enquêtrice"
+      />
     </main>
   );
 }

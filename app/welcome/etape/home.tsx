@@ -6,7 +6,7 @@ export function Home({ goLogin }: { goLogin: () => void }) {
         src="https://i.ibb.co/ksX071gk/background.png"
         alt="Bienvenue à toi enquêtrice"
       />
-      <h1 className="typewriter-effect">L'enquête du Dôme</h1>
+      <h1 className="typewriter-effect">Bienvenue au Dôme</h1>
       <br />
       <button onClick={goLogin}>Commencer</button>
     </section>

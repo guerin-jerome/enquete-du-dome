@@ -131,7 +131,7 @@ export function Etape2() {
         }
 
         .word-box.selected {
-          background-color: #red;
+          background-color: #cea866;
         }
 
         .word-box.disabled {
@@ -162,7 +162,7 @@ export function Etape2() {
                 y1={from.y}
                 x2={to.x}
                 y2={to.y}
-                stroke="whitesmoke"
+                stroke="#cea866"
                 strokeWidth="2"
               />
             );
@@ -224,6 +224,60 @@ export function Etape2() {
             <strong> agissements suspects</strong> de chaque personnes pendant
             la soirée.
           </p>
+          <table>
+            <tr>
+              <th>Personne</th>
+              <th>Fiche</th>
+              <th>Indice</th>
+              <th>Polaroïd</th>
+            </tr>
+            <tr>
+              <td>Marion</td>
+              <td>1</td>
+              <td>T</td>
+              <td>Dôme dans le noir</td>
+            </tr>
+            <tr>
+              <td>Florian</td>
+              <td>2</td>
+              <td>U</td>
+              <td>Trou dans jardin</td>
+            </tr>
+            <tr>
+              <td>Pierre</td>
+              <td>3</td>
+              <td>V</td>
+              <td>Appareil de photographie</td>
+            </tr>
+            <tr>
+              <td>Axelle</td>
+              <td>4</td>
+              <td>W</td>
+              <td>Poubelle renversée</td>
+            </tr>
+            <tr>
+              <td>Léa</td>
+              <td>5</td>
+              <td>X</td>
+              <td>Coupure de courant</td>
+            </tr>
+            <tr>
+              <td>Jérôme</td>
+              <td>6</td>
+              <td>Y</td>
+              <td>Couteau ensanglanté</td>
+            </tr>
+            <tr>
+              <td>Paul-Arthur</td>
+              <td>7</td>
+              <td>Z</td>
+              <td>Bureau vide</td>
+            </tr>
+          </table>
+
+          <div id="soumission" className="next-step">
+            <button onClick={() => {}}>Continuer</button>
+          </div>
         </>
       )}
     </section>

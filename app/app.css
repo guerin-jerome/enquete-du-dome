@@ -12,7 +12,8 @@ body {
 h1,
 p,
 label,
-span {
+span,
+td {
   color: whitesmoke;
 }
 
@@ -154,4 +155,30 @@ span {
   font-size: 25px;
   margin: 10px 0 0 7px;
   padding: 0;
+}
+
+/* Étape 2 */
+
+#step-2 table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+#step-2 th {
+  background-color: #cea866;
+  color: #091618;
+}
+
+#step-2 td,
+#step-2 th {
+  border: 1px solid whitesmoke;
+  text-align: left;
+  padding: 8px;
+  text-align: center;
+}
+
+#step-2 .next-step {
+  margin-bottom: 20px;
 }

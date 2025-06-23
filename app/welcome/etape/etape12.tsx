@@ -43,7 +43,7 @@ export function Etape12({
       {status === "success" && (
         <>
           <p>
-            Arme trouvé. Tu peux désormais ouvrir l'
+            Arme trouvée. Tu peux désormais ouvrir l'
             <em>enveloppe </em>
             <strong>B</strong>.
           </p>

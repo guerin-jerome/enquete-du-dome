@@ -81,17 +81,17 @@ export function Etape2() {
       setStatus("success");
     } else {
       let errors = [];
-      solutions.forEach(([name, numFiche, index]) => {
-        const [solutionName, solutionNumFiche] = propositions?.[index] || [
-          null,
-          null,
-        ];
-        if (name !== solutionName || numFiche !== solutionNumFiche) {
+
+      propositions.forEach(([propName, numFiche], index) => {
+        const solution = solutions.find(([name]) => name === propName);
+
+        if (!solution || solution[0] !== propName || solution[1] !== numFiche) {
           errors.push(index);
         }
       });
+
       setStatus("error");
-      setNbErrors(errors.length);
+      setNbErrors(errors.length + (solutions.length - propositions.length));
     }
   };
 

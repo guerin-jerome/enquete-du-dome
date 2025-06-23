@@ -1,7 +1,19 @@
 /* Global */
 
+body {
+  margin: 0;
+}
+
 * {
   font-family: "Courier New", Courier, monospace;
+  background-color: #091618;
+}
+
+h1,
+p,
+label,
+span {
+  color: whitesmoke;
 }
 
 .title {
@@ -15,7 +27,103 @@
   gap: 10px;
 }
 
+#step-1,
+#step-1-2,
+#step-2 {
+  padding: 0 15px;
+}
+
+/* Home */
+
+#home {
+  text-align: center;
+}
+
+#home img {
+  width: 100vw;
+}
+
+#home h1 {
+  color: #f1efce;
+}
+
+#home p {
+  color: #cea866;
+}
+
+#home button {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.1rem;
+  background-color: transparent;
+  padding: 0.75em 1.5em;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #cea866;
+  border: 2px solid #cea866;
+}
+
+.typewriter-effect {
+  font-family: "Courier New", Courier, monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #f1efce;
+  width: fit-content;
+  max-width: 250px;
+  display: inline-block;
+  animation: typing 3s steps(30, end) forwards,
+    blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  0%,
+  100% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #f1efce;
+  }
+}
+
 /* Étape 1 */
+
+#step-1 input,
+#step-1-2 input,
+#step-2 input {
+  background-color: whitesmoke;
+  border: gray 1px solid;
+  border-radius: 2px;
+}
+
+#step-1 button,
+#step-1-2 button,
+#step-2 button {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1rem;
+  color: whitesmoke;
+  border: 2px solid whitesmoke;
+  background-color: transparent;
+  padding: 0.5em 1.2em;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+#step-1 input:disabled,
+#step-1-2 input:disabled,
+#step-2 input:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
 
 #step-1 #digicode,
 #step-1-2 #arme-choice {
@@ -39,7 +147,7 @@
 
 #step-1-2 input {
   margin-top: 10px;
-  padding: 5px 10px;
+  padding: 12px 18px;
 }
 
 #step-1-2 #arme-choice p {

@@ -22,7 +22,7 @@ const solutions = [
   ["Paul-Arthur", "7"],
 ];
 
-export default function Etape2() {
+export function Etape2() {
   const containerRef = useRef(null);
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [connections, setConnections] = useState<
@@ -118,6 +118,7 @@ export default function Etape2() {
           flex-direction: column;
           gap: 16px;
           z-index: 10;
+          background-color: transparent;
         }
 
         .word-box {
@@ -130,12 +131,11 @@ export default function Etape2() {
         }
 
         .word-box.selected {
-          background-color: #cde4ff;
+          background-color: #red;
         }
 
         .word-box.disabled {
-          background-color: #eee;
-          cursor: not-allowed;
+          background-color: #cea866;
         }
 
         .match-svg {
@@ -162,7 +162,7 @@ export default function Etape2() {
                 y1={from.y}
                 x2={to.x}
                 y2={to.y}
-                stroke="black"
+                stroke="whitesmoke"
                 strokeWidth="2"
               />
             );

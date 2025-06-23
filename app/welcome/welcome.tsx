@@ -2,7 +2,11 @@ export function Welcome() {
   return (
     <main>
       <div id="left-part">
-        <img id="background" src="../../docs/background.png" />
+        <img
+          id="background"
+          src="https://i.ibb.co/ksX071gk/background.png"
+          alt="Bienvenue à toi enquêtrice"
+        />
       </div>
       <div id="right-part">
         <h1>L'enquête du Dôme</h1>

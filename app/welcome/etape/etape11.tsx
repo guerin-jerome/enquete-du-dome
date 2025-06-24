@@ -1,14 +1,19 @@
 import { useRef, useState, type KeyboardEvent } from "react";
+import { client } from "~/utils/supabase";
 
 export function Etape11({
   onComplete,
   etape,
+  utilisateur,
 }: {
   onComplete: () => void;
   etape: number;
+  utilisateur: string;
 }) {
-  const [solution1, setSolution1] = useState(["", "", "", ""]);
-  const [status, setStatus] = useState("current");
+  const [solution1, setSolution1] = useState(
+    etape > 1.1 ? ["6", "6", "7", "6"] : ["", "", "", ""]
+  );
+  const [status, setStatus] = useState(etape > 1.1 ? "success" : "current");
 
   const refInput1 = useRef(null);
   const refInput2 = useRef(null);
@@ -40,9 +45,15 @@ export function Etape11({
     }
   };
 
-  const soumettre = () => {
+  const soumettre = async () => {
     if (solution1.join("") === "6676") {
-      setStatus("success");
+      const { error } = await client
+        .from("utilisateurs")
+        .update({ current_step: 1.2 })
+        .eq("nom_utilisateur", utilisateur)
+        .select();
+
+      if (!error) setStatus("success");
     } else {
       setStatus("error");
     }
@@ -58,7 +69,7 @@ export function Etape11({
         <input
           maxLength={1}
           type="number"
-          disabled={status === "success"}
+          disabled={status === "success" || etape > 1.1}
           ref={refInput1}
           value={solution1[0]}
           onKeyDown={(event) => handleWrite(event, 0)}
@@ -66,7 +77,7 @@ export function Etape11({
         <input
           maxLength={1}
           type="number"
-          disabled={status === "success"}
+          disabled={status === "success" || etape > 1.1}
           ref={refInput2}
           value={solution1[1]}
           onKeyDown={(event) => handleWrite(event, 1)}
@@ -74,7 +85,7 @@ export function Etape11({
         <input
           maxLength={1}
           type="number"
-          disabled={status === "success"}
+          disabled={status === "success" || etape > 1.1}
           ref={refInput3}
           value={solution1[2]}
           onKeyDown={(event) => handleWrite(event, 2)}
@@ -82,7 +93,7 @@ export function Etape11({
         <input
           maxLength={1}
           type="number"
-          disabled={status === "success"}
+          disabled={status === "success" || etape > 1.1}
           ref={refInput4}
           value={solution1[3]}
           onKeyDown={(event) => handleWrite(event, 3)}

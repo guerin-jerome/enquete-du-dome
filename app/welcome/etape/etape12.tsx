@@ -1,18 +1,27 @@
 import { useState } from "react";
+import { client } from "~/utils/supabase";
 
 export function Etape12({
   onComplete,
   etape,
+  utilisateur,
 }: {
   onComplete: () => void;
   etape: number;
+  utilisateur: string;
 }) {
   const [solution, setSolution] = useState("");
   const [status, setStatus] = useState("current");
 
-  const soumettre = () => {
+  const soumettre = async () => {
     if (solution.toLowerCase().includes("couteau")) {
-      setStatus("success");
+      const { error } = await client
+        .from("utilisateurs")
+        .update({ current_step: 2 })
+        .eq("nom_utilisateur", utilisateur)
+        .select();
+
+      if (!error) setStatus("success");
     } else {
       setStatus("error");
     }

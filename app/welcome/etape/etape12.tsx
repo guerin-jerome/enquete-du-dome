@@ -58,8 +58,12 @@ export function Etape12({
           </p>
           {etape === 1.2 && (
             <>
-              <p>Clique sur "Fait" pour continuer.</p>
-              <button onClick={onComplete}>Fait</button>
+              <p>
+                Une fois que tu as réussi à déchiffrer le message sur le papier
+                et effectuer ce qu'on attends de toi, clique sur "OK" pour
+                continuer.
+              </p>
+              <button onClick={onComplete}>OK</button>
             </>
           )}
         </>

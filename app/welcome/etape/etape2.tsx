@@ -1,97 +1,130 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
+import { client } from "~/utils/supabase";
 
-const leftWords = [
-  "Léa",
-  "Pierre",
-  "Jérôme",
-  "Paul-Arthur",
-  "Florian",
-  "Axelle",
-  "Marion",
-];
-
-const rightWords = ["1", "2", "3", "4", "5", "6", "7"];
+interface Solution {
+  [key: number]: {
+    name?: string;
+    indice?: string;
+    polaroid?: string;
+  };
+}
 
 const solutions = [
-  ["Marion", "1"],
-  ["Florian", "2"],
-  ["Pierre", "3"],
-  ["Axelle", "4"],
-  ["Léa", "5"],
-  ["Jérôme", "6"],
-  ["Paul-Arthur", "7"],
+  { fiche: 1, name: "mar", indice: "dome", polaroid: "chantier" },
+  { fiche: 2, name: "flo", indice: "200", polaroid: "salle" },
+  { fiche: 3, name: "pie", indice: "qr", polaroid: "fumer" },
+  { fiche: 4, name: "axe", indice: "deg", polaroid: "ramasser" },
+  { fiche: 5, name: "lea", indice: "ticket", polaroid: "toilette" },
+  { fiche: 6, name: "jer", indice: "pelle", polaroid: "courir" },
+  { fiche: 7, name: "par", indice: "sms-pa", polaroid: "quitter" },
 ];
 
-export function Etape2() {
-  const containerRef = useRef(null);
-  const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
-  const [connections, setConnections] = useState<
-    { left: string; right: string }[]
-  >([]);
-  const [positions, setPositions] = useState({});
+export function Etape2({
+  onComplete,
+  utilisateur,
+}: {
+  onComplete: () => void;
+  utilisateur: string;
+}) {
   const [status, setStatus] = useState("current");
-  const [nbErrors, setNbErrors] = useState<number | null>(null);
+  const [solution, setSolution] = useState<Solution>({});
+  const [errors, setErrors] = useState<number[]>([]);
 
-  const reset = () => {
-    setStatus("current");
-    setSelectedLeft(null);
-    setConnections([]);
-    setPositions({});
-    setNbErrors(null);
-  };
+  const nameSelector = (index: number, isDisabled: boolean) => (
+    <select
+      disabled={isDisabled}
+      name="name"
+      value={solution[index]?.name || ""}
+      onChange={(e) => {
+        setErrors([]);
+        setSolution((current) => ({
+          ...current,
+          [index]: { ...current[index], name: e.target.value },
+        }));
+      }}
+    >
+      <option value="">Nom</option>
+      <option value="par">Paul-Arthur</option>
+      <option value="flo">Florian</option>
+      <option value="jer">Jérôme</option>
+      <option value="mar">Marion</option>
+      <option value="axe">Axelle</option>
+      <option value="lea">Léa</option>
+      <option value="pie">Pierre</option>
+    </select>
+  );
 
-  const isConnected = (word: string, side: "left" | "right") =>
-    connections.some((conn) => conn[side] === word);
+  const indiceSelector = (index: number, isDisabled: boolean) => (
+    <select
+      disabled={isDisabled}
+      name="indice"
+      value={solution[index]?.indice || ""}
+      onChange={(e) => {
+        setErrors([]);
+        setSolution((current) => ({
+          ...current,
+          [index]: { ...current[index], indice: e.target.value },
+        }));
+      }}
+    >
+      <option value="">Indice</option>
+      <option value="sms-pa">SMS de PA</option>
+      <option value="ticket">ticket vestiaire</option>
+      <option value="qr">QR code</option>
+      <option value="deg">SMS d'Axelle</option>
+      <option value="dome">SMS Dôme pas prêt</option>
+      <option value="200">SMS 200 balles</option>
+      <option value="pelle">Jérôme avec pelle</option>
+    </select>
+  );
 
-  const handleLeftClick = (word: string) => {
-    if (!isConnected(word, "left")) {
-      setSelectedLeft(word);
-    } else {
-      setSelectedLeft(null);
-    }
-  };
+  const polaroidSelector = (index: number, isDisabled: boolean) => (
+    <select
+      disabled={isDisabled}
+      name="polaroid"
+      value={solution[index]?.polaroid || ""}
+      onChange={(e) => {
+        setErrors([]);
+        setSolution((current) => ({
+          ...current,
+          [index]: { ...current[index], polaroid: e.target.value },
+        }));
+      }}
+    >
+      <option value="">Polaroïd</option>
+      <option value="chantier">Casque chantier</option>
+      <option value="ramasser">Ramasse cigarette</option>
+      <option value="fumer">Fumer</option>
+      <option value="quitter">Quitter le dôme</option>
+      <option value="courir">Courir</option>
+      <option value="salle">Salle réception</option>
+      <option value="toilette">Toilette</option>
+    </select>
+  );
 
-  const handleRightClick = (word: string) => {
-    if (selectedLeft && !isConnected(word, "right")) {
-      setConnections([...connections, { left: selectedLeft, right: word }]);
-      setSelectedLeft(null);
-    }
-  };
-
-  useEffect(() => {
-    const newPositions = {};
-    const elements = containerRef.current?.querySelectorAll("[data-key]");
-    elements.forEach((el: HTMLElement) => {
-      const key = el.getAttribute("data-key");
-      const rect = el.getBoundingClientRect();
-      const parent = containerRef.current?.getBoundingClientRect();
-      newPositions[key] = {
-        x: rect.left + rect.width / 2 - parent.left,
-        y: rect.top + rect.height / 2 - parent.top,
-      };
+  const soumettre = async () => {
+    let errorList: number[] = [];
+    solutions.forEach(({ fiche, name, indice, polaroid }) => {
+      const findedSolution = solution[fiche];
+      if (
+        !findedSolution ||
+        findedSolution.name !== name ||
+        findedSolution.indice !== indice ||
+        findedSolution.polaroid !== polaroid
+      ) {
+        errorList.push(fiche);
+      }
     });
-    setPositions(newPositions);
-  }, [connections, selectedLeft]);
-
-  const soumettre = () => {
-    setStatus("submitted");
-    const propositions = connections.map(({ left, right }) => [left, right]);
-    propositions.sort((a, b) => a[1].localeCompare(b[1]));
-    if (JSON.stringify(propositions) === JSON.stringify(solutions)) {
-      setStatus("success");
+    if (errorList.length !== 0) {
+      setErrors(errorList);
     } else {
-      let errors = [];
+      const { error } = await client
+        .from("utilisateurs")
+        .update({ current_step: 2.1 })
+        .eq("nom_utilisateur", utilisateur)
+        .select();
 
-      propositions.forEach(([propName, numFiche], index) => {
-        const solution = solutions.find(([name]) => name === propName);
-
-        if (!solution || solution[0] !== propName || solution[1] !== numFiche) {
-          errors.push(index);
-        }
-      });
-
-      setStatus("error");
-      setNbErrors(errors.length + (solutions.length - propositions.length));
+      if (!error) setStatus("success");
     }
   };
 
@@ -101,183 +134,54 @@ export function Etape2() {
         <strong>🔍 Étape 2</strong> - Repérer les agissements suspects pendant
         la soirée
       </p>
-      <p>Associe les personnes aux numéros de fiche.</p>
-      <style>{`
-        .word-match-container {
-          position: relative;
-          display: flex;
-          justify-content: space-between;
-          padding: 20px;
-          border: 1px solid #ccc;
-          max-width: 600px;
-          margin: 0 auto;
-        }
+      <p>✉️ Dans l'enveloppe que tu viens d'ouvrir tu as :</p>
+      <ul>
+        <li>7 fiches suspects numérotées avec des indications</li>
+        <li>7 noms de suspect</li>
+        <li>7 polaroïds</li>
+        <li>7 indices</li>
+      </ul>
+      <p>
+        Comme tu te doutes, tu vas devoir assembler pour chaque fiche le nom du
+        suspect, le polaroïd associé et son indice correspondant.
+      </p>
+      <p>Une fois tout ceci rassemblé, renseigne ta solution ici ⬇️</p>
 
-        .word-column {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          z-index: 10;
-          background-color: transparent;
-        }
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Fiche</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Polaroïd</th>
+            <th scope="col">Indice</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[1, 2, 3, 4, 5, 6, 7].map((numFiche) => (
+            <tr key={`fiche-${numFiche}`}>
+              <th scope="row">
+                {errors.includes(numFiche) ? "❌ " : ""}
+                {numFiche}
+              </th>
+              <td>{nameSelector(numFiche, status === "success")}</td>
+              <td>{polaroidSelector(numFiche, status === "success")}</td>
+              <td>{indiceSelector(numFiche, status === "success")}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-        .word-box {
-          padding: 10px 14px;
-          border: 1px solid #aaa;
-          border-radius: 6px;
-          background-color: white;
-          cursor: pointer;
-          user-select: none;
-        }
-
-        .word-box.selected {
-          background-color: #cea866;
-        }
-
-        .word-box.disabled {
-          background-color: #cea866;
-        }
-
-        .match-svg {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          z-index: 0;
-        }
-      `}</style>
-
-      <div className="word-match-container" ref={containerRef}>
-        <svg className="match-svg">
-          {connections.map(({ left, right }, i) => {
-            const from = positions[`left-${left}`];
-            const to = positions[`right-${right}`];
-            if (!from || !to) return null;
-            return (
-              <line
-                key={i}
-                x1={from.x}
-                y1={from.y}
-                x2={to.x}
-                y2={to.y}
-                stroke="#cea866"
-                strokeWidth="2"
-              />
-            );
-          })}
-        </svg>
-
-        {/* Colonne gauche */}
-        <div className="word-column">
-          {leftWords.map((word) => {
-            const isSel = selectedLeft === word;
-            const isUsed = isConnected(word, "left");
-            return (
-              <div
-                key={word}
-                data-key={`left-${word}`}
-                className={`word-box ${isSel ? "selected" : ""} ${
-                  isUsed ? "disabled" : ""
-                }`}
-                onClick={() => !isUsed && handleLeftClick(word)}
-              >
-                {word}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Colonne droite */}
-        <div className="word-column">
-          {rightWords.map((word) => {
-            const isUsed = isConnected(word, "right");
-            return (
-              <div
-                key={word}
-                data-key={`right-${word}`}
-                className={`word-box ${isUsed ? "disabled" : ""}`}
-                onClick={() => !isUsed && handleRightClick(word)}
-              >
-                {word}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {status !== "success" && (
-        <div id="soumission">
-          <button onClick={status === "current" ? soumettre : reset}>
-            {status === "current" ? "Soumettre" : "Réessayer"}
-          </button>
-          <span>{status === "error" && <>- {nbErrors} erreurs</>}</span>
-        </div>
-      )}
+      {status !== "success" && <button onClick={soumettre}>Valider</button>}
 
       {status === "success" && (
         <>
-          <p>Bravo, tu as trouvé toutes les correspondances.</p>
           <p>
-            Tu peux maintenant accéder aux <em>indices</em> sur les
-            <strong> agissements suspects</strong> de chaque personnes pendant
-            la soirée.
+            👏🏻 Bravo d'avoir réussi à tout assembler, désormais tu vas devoir
+            mériter ton prochain indice !
           </p>
-          <table>
-            <tr>
-              <th>Personne</th>
-              <th>Fiche</th>
-              <th>Indice</th>
-              <th>Polaroïd</th>
-            </tr>
-            <tr>
-              <td>Marion</td>
-              <td>1</td>
-              <td>T</td>
-              <td>Dôme dans le noir</td>
-            </tr>
-            <tr>
-              <td>Florian</td>
-              <td>2</td>
-              <td>U</td>
-              <td>Trou dans jardin</td>
-            </tr>
-            <tr>
-              <td>Pierre</td>
-              <td>3</td>
-              <td>V</td>
-              <td>Appareil de photographie</td>
-            </tr>
-            <tr>
-              <td>Axelle</td>
-              <td>4</td>
-              <td>W</td>
-              <td>Poubelle renversée</td>
-            </tr>
-            <tr>
-              <td>Léa</td>
-              <td>5</td>
-              <td>X</td>
-              <td>Coupure de courant</td>
-            </tr>
-            <tr>
-              <td>Jérôme</td>
-              <td>6</td>
-              <td>Y</td>
-              <td>Couteau ensanglanté</td>
-            </tr>
-            <tr>
-              <td>Paul-Arthur</td>
-              <td>7</td>
-              <td>Z</td>
-              <td>Bureau vide</td>
-            </tr>
-          </table>
-
-          <div id="soumission" className="next-step">
-            <button onClick={() => {}}>Continuer</button>
-          </div>
+          <p>Pour cela, ouvre l'enveloppe D.</p>
+          <p>Une fois ouverte, clique sur "Fait" pour continuer.</p>
+          <button onClick={onComplete}>Fait</button>
         </>
       )}
     </section>

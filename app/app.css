@@ -13,8 +13,13 @@ h1,
 p,
 label,
 span,
-td {
+td,
+li {
   color: whitesmoke;
+}
+
+select {
+  background-color: whitesmoke;
 }
 
 .title {

@@ -48,7 +48,9 @@ export function Welcome() {
       )}
 
       {/** Etape 2 */}
-      {type === "enquete" && etape === 2 && <Etape2 />}
+      {type === "enquete" && etape === 2 && (
+        <Etape2 onComplete={() => {}} utilisateur={utilisateur || ""} />
+      )}
     </main>
   );
 }

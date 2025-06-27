@@ -22,19 +22,27 @@ const solutions = [
 export function Etape2({
   onComplete,
   utilisateur,
+  etape,
 }: {
   onComplete: () => void;
   utilisateur: string;
+  etape: number;
 }) {
   const [status, setStatus] = useState("current");
   const [solution, setSolution] = useState<Solution>({});
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<number[]>([]);
+  const [success, setSuccess] = useState<number[]>([]);
 
   const nameSelector = (index: number, isDisabled: boolean) => (
     <select
-      disabled={isDisabled}
+      disabled={isDisabled || etape > 2}
       name="name"
-      value={solution[index]?.name || ""}
+      value={
+        etape > 2
+          ? solutions.find((s) => s.fiche === index)?.name
+          : solution[index]?.name || ""
+      }
       onChange={(e) => {
         setErrors([]);
         setSolution((current) => ({
@@ -56,9 +64,13 @@ export function Etape2({
 
   const indiceSelector = (index: number, isDisabled: boolean) => (
     <select
-      disabled={isDisabled}
+      disabled={isDisabled || etape > 2}
       name="indice"
-      value={solution[index]?.indice || ""}
+      value={
+        etape > 2
+          ? solutions.find((s) => s.fiche === index)?.indice
+          : solution[index]?.indice || ""
+      }
       onChange={(e) => {
         setErrors([]);
         setSolution((current) => ({
@@ -68,21 +80,25 @@ export function Etape2({
       }}
     >
       <option value="">Indice</option>
-      <option value="sms-pa">SMS de PA</option>
-      <option value="ticket">ticket vestiaire</option>
+      <option value="sms-pa">J'en suis capable</option>
+      <option value="ticket">Ticket vestiaire</option>
       <option value="qr">QR code</option>
-      <option value="deg">SMS d'Axelle</option>
-      <option value="dome">SMS Dôme pas prêt</option>
-      <option value="200">SMS 200 balles</option>
-      <option value="pelle">Jérôme avec pelle</option>
+      <option value="deg">Vomir de dégoût</option>
+      <option value="dome">Dôme pas prêt</option>
+      <option value="200">200 balles</option>
+      <option value="pelle">Personne avec pelle</option>
     </select>
   );
 
   const polaroidSelector = (index: number, isDisabled: boolean) => (
     <select
-      disabled={isDisabled}
+      disabled={isDisabled || etape > 2}
       name="polaroid"
-      value={solution[index]?.polaroid || ""}
+      value={
+        etape > 2
+          ? solutions.find((s) => s.fiche === index)?.polaroid
+          : solution[index]?.polaroid || ""
+      }
       onChange={(e) => {
         setErrors([]);
         setSolution((current) => ({
@@ -103,7 +119,9 @@ export function Etape2({
   );
 
   const soumettre = async () => {
+    setLoading(true);
     let errorList: number[] = [];
+    let successList: number[] = [];
     solutions.forEach(({ fiche, name, indice, polaroid }) => {
       const findedSolution = solution[fiche];
       if (
@@ -113,10 +131,16 @@ export function Etape2({
         findedSolution.polaroid !== polaroid
       ) {
         errorList.push(fiche);
+      } else {
+        successList.push(fiche);
       }
     });
+    if (successList.length > 0) {
+      setSuccess(successList);
+    }
     if (errorList.length !== 0) {
       setErrors(errorList);
+      setLoading(false);
     } else {
       const { error } = await client
         .from("utilisateurs")
@@ -124,12 +148,13 @@ export function Etape2({
         .eq("nom_utilisateur", utilisateur)
         .select();
 
+      setLoading(false);
       if (!error) setStatus("success");
     }
   };
 
   return (
-    <section id="step-2">
+    <section className="step" id="2">
       <p className="title">
         <strong>🔍 Étape 2</strong> - Repérer les agissements suspects pendant
         la soirée
@@ -161,6 +186,7 @@ export function Etape2({
             <tr key={`fiche-${numFiche}`}>
               <th scope="row">
                 {errors.includes(numFiche) ? "❌ " : ""}
+                {success.includes(numFiche) || etape > 2 ? "✅ " : ""}
                 {numFiche}
               </th>
               <td>{nameSelector(numFiche, status === "success")}</td>
@@ -171,17 +197,28 @@ export function Etape2({
         </tbody>
       </table>
 
-      {status !== "success" && <button onClick={soumettre}>Valider</button>}
+      {status !== "success" && etape === 2 && (
+        <button onClick={soumettre}>
+          {loading ? "Chargement..." : "Valider"}
+        </button>
+      )}
 
-      {status === "success" && (
+      {(status === "success" || etape > 2) && (
         <>
           <p>
             👏🏻 Bravo d'avoir réussi à tout assembler, désormais tu vas devoir
             mériter ton prochain indice !
           </p>
-          <p>Pour cela, ouvre l'enveloppe D.</p>
-          <p>Une fois ouverte, clique sur "Fait" pour continuer.</p>
-          <button onClick={onComplete}>Fait</button>
+          <p>
+            Pour cela, ouvre l'<em>enveloppe </em>
+            <strong>D</strong>.
+          </p>
+          {etape === 2 && (
+            <>
+              <p>Une fois ouverte, clique sur "Fait" pour continuer.</p>
+              <button onClick={onComplete}>Fait</button>
+            </>
+          )}
         </>
       )}
     </section>

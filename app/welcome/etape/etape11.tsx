@@ -10,6 +10,7 @@ export function Etape11({
   etape: number;
   utilisateur: string;
 }) {
+  const [loading, setLoading] = useState(false);
   const [solution1, setSolution1] = useState(
     etape > 1.1 ? ["6", "6", "7", "6"] : ["", "", "", ""]
   );
@@ -46,6 +47,7 @@ export function Etape11({
   };
 
   const soumettre = async () => {
+    setLoading(true);
     if (solution1.join("") === "6676") {
       const { error } = await client
         .from("utilisateurs")
@@ -53,14 +55,16 @@ export function Etape11({
         .eq("nom_utilisateur", utilisateur)
         .select();
 
+      setLoading(false);
       if (!error) setStatus("success");
     } else {
+      setLoading(false);
       setStatus("error");
     }
   };
 
   return (
-    <section id="step-1">
+    <section className="step" id="1">
       <p className="title">
         <strong>🔍 Étape 1</strong> - Comprendre le drame
       </p>
@@ -103,7 +107,9 @@ export function Etape11({
       </div>
       {status !== "success" && (
         <div id="soumission">
-          <button onClick={soumettre}>Soumettre</button>
+          <button onClick={soumettre}>
+            {loading ? "Chargement..." : "Soumettre"}
+          </button>
           <span>{status === "error" && <>- Code erroné</>}</span>
         </div>
       )}
@@ -117,7 +123,7 @@ export function Etape11({
           {etape === 1.1 && (
             <>
               <p>Clique sur "Fait" pour continuer.</p>
-              <button onClick={onComplete}>Fait</button>
+              <button onClick={onComplete}>"Fait"</button>
             </>
           )}
         </>

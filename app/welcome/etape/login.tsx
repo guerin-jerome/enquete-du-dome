@@ -20,7 +20,7 @@ export function Login({ setPageInfos }: LoginProps) {
     let { data: utilisateurs, error } = await client
       .from("utilisateurs")
       .select("*")
-      .eq("nom_utilisateur", infos.username)
+      .eq("nom_utilisateur", infos.username.toLowerCase())
       .eq("password", infos.password);
 
     if (error || !utilisateurs || utilisateurs?.length === 0) {

@@ -10,10 +10,12 @@ export function Etape12({
   etape: number;
   utilisateur: string;
 }) {
+  const [loading, setLoading] = useState(false);
   const [solution, setSolution] = useState("");
   const [status, setStatus] = useState("current");
 
   const soumettre = async () => {
+    setLoading(true);
     if (solution.toLowerCase().includes("couteau")) {
       const { error } = await client
         .from("utilisateurs")
@@ -21,14 +23,16 @@ export function Etape12({
         .eq("nom_utilisateur", utilisateur)
         .select();
 
+      setLoading(false);
       if (!error) setStatus("success");
     } else {
+      setLoading(false);
       setStatus("error");
     }
   };
 
   return (
-    <div id="step-1-2">
+    <div className="step" id="1-2">
       <div>
         <label htmlFor="arme">Quel est l'arme du crime ?</label>
         <div id="arme-choice">
@@ -45,7 +49,9 @@ export function Etape12({
       </div>
       {status !== "success" && (
         <div id="soumission">
-          <button onClick={soumettre}>Soumettre</button>
+          <button onClick={soumettre}>
+            {loading ? "Chargement..." : "Soumettre"}
+          </button>
           <span>{status === "error" && <>- Mauvaise arme</>}</span>
         </div>
       )}

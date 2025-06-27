@@ -34,9 +34,8 @@ export function Etape42({
       </p>
       <p>
         Et concernant <strong>Florian</strong>, même s'il était bien présent
-        dans l'annexe au moment du meurtre, il était carrément à l'ouest suite à
-        l'alcool qu'il avait ingéré et n'était pas en capacité de faire quoi que
-        ce soit.
+        dans l'annexe, il était carrément à l'ouest suite à l'alcool qu'il avait
+        ingéré et n'était pas en capacité de faire quoi que ce soit.
       </p>
       <p>
         Tu approches de la fin... Clique sur "Continuer" lorsque tu seras prête

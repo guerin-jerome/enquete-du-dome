@@ -39,9 +39,9 @@ export function Etape4({
             🗺️ Tu vas devoir réaliser les instructions qui t'ont été fournis.
           </p>
           <p>
-            💍 Trouve cette bague dans le secteur de La Rochelle, elle
-            t'apportera des informations cruciales sur les deux suspects à
-            innocenter.
+            💍 Rends-toi au Dôme de La Rochelle, Marion y a déposé la bague
+            d'accès à l'annexe. Elle t'apportera des informations cruciales sur
+            les deux suspects à innocenter.
           </p>
           {etape === 4 && (
             <button onClick={gotoNext}>

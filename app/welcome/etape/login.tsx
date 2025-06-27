@@ -41,7 +41,7 @@ export function Login({ setPageInfos }: LoginProps) {
   return (
     <section id="login">
       <img id="cercle-logo" src="https://i.ibb.co/BWRNbtM/logo.png" />
-      <h2>🔒 COMPTE INSPECTEUR</h2>
+      <h2>🔒 COMPTE Agent</h2>
       <div id="login-form">
         <label>Identifiant agent</label>
         <input
@@ -63,7 +63,7 @@ export function Login({ setPageInfos }: LoginProps) {
         />
       </div>
       <button disabled={status === "loading"} onClick={soumettre}>
-        {status === "loading" ? "Chargement..." : "Accéder au logiciel"}
+        {status === "loading" ? "Chargement..." : "Accéder"}
       </button>
       {status === "error" && (
         <p className="error-message">Ce compte n'existe pas.</p>

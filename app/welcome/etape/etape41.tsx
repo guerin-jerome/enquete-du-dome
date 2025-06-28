@@ -78,7 +78,7 @@ export function Etape41({
     <section className="step" id="4-1">
       <p>
         En ouvrant l'<em>enveloppe </em>
-        <strong>J</strong> et à l'aide la bague, trouve les deux personnes qui
+        <strong>I</strong> et à l'aide la bague, trouve les deux personnes qui
         n'ont rien à voir avec le meurtre de Mélanie.
       </p>
       <div id="question-occupation-toilette">

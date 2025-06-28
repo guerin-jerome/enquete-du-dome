@@ -16,7 +16,7 @@ export function Etape31({
 
   const soumettre = async () => {
     setLoading(true);
-    if (solution.toLowerCase().includes("152634")) {
+    if (solution.toLowerCase().includes("15324")) {
       const { error } = await client
         .from("utilisateurs")
         .update({ current_step: 3.2 })
@@ -45,7 +45,7 @@ export function Etape31({
       <input
         type="number"
         disabled={status === "success" || etape > 3.1}
-        value={etape > 3.1 ? "152634" : solution}
+        value={etape > 3.1 ? "15324" : solution}
         onChange={(e) => {
           setStatus("current");
           setSolution(e.target.value);

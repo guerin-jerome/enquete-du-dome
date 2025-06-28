@@ -66,8 +66,7 @@ export function Etape12({
             <>
               <p>
                 Une fois que tu as réussi à déchiffrer le message sur le papier
-                et effectuer ce qu'on attends de toi, clique sur "OK" pour
-                continuer.
+                et ouvert l'enveloppe C, clique sur "OK" pour continuer.
               </p>
               <button onClick={onComplete}>OK</button>
             </>

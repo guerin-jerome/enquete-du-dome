@@ -29,15 +29,9 @@ export function Etape4({
       <p className="title">
         <strong>🔍 Étape 4</strong> - Des suspects deviennent innocents
       </p>
-      <p>
-        Il est temps d'éliminer deux suspects. Ouvre l'<em>enveloppe </em>
-        <strong>I</strong>.
-      </p>
+      <p>Il est temps d'éliminer deux suspects.</p>
       {etape >= 4 && (
         <>
-          <p>
-            🗺️ Tu vas devoir réaliser les instructions qui t'ont été fournis.
-          </p>
           <p>
             💍 Rends-toi au Dôme de La Rochelle, Marion y a déposé la bague
             d'accès à l'annexe. Elle t'apportera des informations cruciales sur

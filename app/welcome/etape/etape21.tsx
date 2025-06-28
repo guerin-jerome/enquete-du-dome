@@ -15,7 +15,7 @@ export function Etape21({
   const soumettre = async () => {
     setLoading(true);
 
-    if (solution.toLowerCase() === "interrogatoire") {
+    if (solution.toLowerCase().trim() === "interrogatoire") {
       const { error } = await client
         .from("utilisateurs")
         .update({ current_step: 3 })

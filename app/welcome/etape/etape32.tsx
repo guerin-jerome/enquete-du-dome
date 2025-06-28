@@ -38,7 +38,7 @@ export function Etape32({
     <section className="step" id="3-2">
       <p>
         😱 Maintenant, en ouvrant l'<em>enveloppe </em>
-        <strong>F</strong> et à l'aide des indices qui s'y trouve, inscrit ce
+        <strong>G</strong> et à l'aide des indices qui s'y trouve, inscrit ce
         qu'a découvert Mélanie.
       </p>
       <input

@@ -32,8 +32,7 @@ export function Etape3({
       <p>
         Désormais tu disposes de l'entièreté des interrogatoires, lis
         attentivement ces procès verbaux et n'oublie pas de prendre des notes de
-        ton côté cela te servira à mettre en évidence les points de divergence
-        et les incohérences...
+        ton côté cela te servira à mettre en évidence les incohérences...
       </p>
       {etape === 3 && (
         <>

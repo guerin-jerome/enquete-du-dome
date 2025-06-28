@@ -109,12 +109,12 @@ export function Etape2({
     >
       <option value="">Polaroïd</option>
       <option value="chantier">Casque chantier</option>
-      <option value="ramasser">Ramasse cigarette</option>
+      <option value="ramasser">Ramasse cigarettes</option>
       <option value="fumer">Fumer</option>
       <option value="quitter">Quitter le dôme</option>
       <option value="courir">Courir</option>
       <option value="salle">Salle réception</option>
-      <option value="toilette">Toilette</option>
+      <option value="toilette">Toilettes</option>
     </select>
   );
 
@@ -162,15 +162,11 @@ export function Etape2({
       <p>✉️ Dans l'enveloppe que tu viens d'ouvrir tu as :</p>
       <ul>
         <li>7 fiches suspects numérotées avec des indications</li>
-        <li>7 noms de suspect</li>
+        <li>7 noms de suspects</li>
         <li>7 polaroïds</li>
         <li>7 indices</li>
       </ul>
-      <p>
-        Comme tu te doutes, tu vas devoir assembler pour chaque fiche le nom du
-        suspect, le polaroïd associé et son indice correspondant.
-      </p>
-      <p>Une fois tout ceci rassemblé, renseigne ta solution ici ⬇️</p>
+      <p>Renseigne ta solution ici ⬇️</p>
 
       <table>
         <thead>

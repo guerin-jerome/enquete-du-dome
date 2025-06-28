@@ -39,7 +39,7 @@ export function Etape33({
       <p>Quelle tragédie ! Léa a avorté !</p>
       <p>
         💡 Ouvre l'<em>enveloppe </em>
-        <strong>G</strong> et assemble la chronologie jusqu'à la remise du
+        <strong>H</strong> et assemble la chronologie jusqu'à la remise du
         courant. Cela t'éclairera pour la suite.
       </p>
       <p>
